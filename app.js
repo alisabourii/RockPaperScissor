@@ -1,12 +1,23 @@
+const userPointDispaly = document.getElementById("user-Point");
+const CSPointDispaly = document.getElementById("CS-Point");
+
+const userSetPointDispaly = document.getElementById("user-SetPoint");
+const CSSetPointDispaly = document.getElementById("CS-SetPoint");
+
 const CSChoiceDisplay = document.getElementById("CS-choice")
 const userChoiceDisplay = document.getElementById("user-choice")
 const resultDisplay = document.getElementById("Result")
-
 const possiableChoice = document.querySelectorAll('button');
+
 let userChoice;
-var CSChoice;
+let CSChoice;
 let result;
 
+let TotalUserPoint = 0;
+let TotalCSPoint = 0;
+
+let userLocalPoint = 0;
+let CSLocalPoint = 0;
 
 possiableChoice.forEach(possiableChoice => possiableChoice.addEventListener('click', (e) =>{
     userChoice  =e.target.id
@@ -15,11 +26,34 @@ possiableChoice.forEach(possiableChoice => possiableChoice.addEventListener('cli
         userChoiceDisplay.innerHTML = '';
         CSChoiceDisplay.innerHTML = '';
         resultDisplay.innerHTML = '';
+        userPointDispaly.innerHTML = '0';
+        CSPointDispaly.innerHTML = '0';
     } 
     else{
         generateComputerChoice();
         getResult();
     }
+    
+    if(userLocalPoint === 3)
+    {
+        TotalUserPoint += 1;
+        userLocalPoint = 0;
+        CSLocalPoint = 0;
+    }
+    if(CSLocalPoint === 3)
+    {
+        TotalCSPoint += 1;
+        CSLocalPoint = 0;
+        userLocalPoint = 0;
+        
+    }
+    userSetPointDispaly.innerHTML = userLocalPoint;
+    CSSetPointDispaly.innerHTML = CSLocalPoint;
+
+    userPointDispaly.innerHTML = TotalUserPoint;
+    CSPointDispaly.innerHTML = TotalCSPoint;
+
+
 
    
 }))
@@ -51,20 +85,36 @@ function getResult(){
     
     
     if(CSChoice === 'rock' && userChoice === 'paper'){
-        result = "You Lost"}
+        result = "You Lost";
+        userLocalPoint += 1;
+    }
     if(CSChoice === 'rock' && userChoice === 'scissor'){
-        result = "Computer Lost"}
+        result = "Computer Lost";
+        CSLocalPoint += 1;
+    }
     
-    if(CSChoice === 'paper' && userChoice === 'rock'){
-            result = "Computer Lost"}
-    if(CSChoice === 'paper' && userChoice === 'scissor'){
-        result = "You Lost"}
+    if(CSChoice === 'paper' && userChoice === 'rock')
+    {
+        result = "Computer Lost";
+        CSLocalPoint += 1;
+    }
+    if(CSChoice === 'paper' && userChoice === 'scissor')
+    {
+        result = "You Lost";
+        userLocalPoint += 1;
+    }
     
-    if(CSChoice === 'scissor' && userChoice === 'rock'){
-            result = "You Lost"}
-    if(CSChoice === 'scissor' && userChoice === 'paper'){
-        result = "Computer Lost"}
+    if(CSChoice === 'scissor' && userChoice === 'rock')
+    {
+        result = "You Lost";
+        userLocalPoint += 1;
+    }
+    if(CSChoice === 'scissor' && userChoice === 'paper')
+    {
+        result = "Computer Lost";
+        CSLocalPoint += 1;
+    }
 
 
     resultDisplay.innerHTML = result;
-}
+} 
